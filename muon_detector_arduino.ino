@@ -13,7 +13,7 @@
 #define Buzzer 5
 #define TRG 2
 #define LED 3
-
+void trigger();
 // song 
 const int toneTable[7][5]={
     { 66, 131, 262, 523, 1046},  // C Do
@@ -38,7 +38,7 @@ int songEnd = 62;
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(LED_size, LED, NEO_GRB + NEO_KHZ800);
 int newEvt = 0;
 int led[LED_group_size][3];
-int songIdx = 0;
+const int songIdx = 0;
 
 void setup()
 {
@@ -110,9 +110,12 @@ void loop()
     led[newEvtCH-1][1] = 32*(g*g);
     led[newEvtCH-1][2] = 32*(b*b);
 
-    led[newEvtCH-2][0] = 32*(r*r);
-    led[newEvtCH-2][1] = 32*(g*g);
-    led[newEvtCH-2][2] = 32*(b*b);
+    led[LED_group_size-2][0] = 32*(r*r);
+    led[LED_group_size-2][1] = 32*(g*g);
+    led[LED_group_size-2][2] = 32*(b*b);
+    led[LED_group_size-1][0] = 32*(r*r);
+    led[LED_group_size-1][1] = 32*(g*g);
+    led[LED_group_size-1][2] = 32*(b*b);
     
     
   }
