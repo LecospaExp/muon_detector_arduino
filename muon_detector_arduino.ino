@@ -103,12 +103,12 @@ void loop()
     if(songIdx>=songEnd)songIdx = 0;
     tone(Buzzer, toneTable[happy_tone[songIdx++]-1][happy_series[songIdx]+1]);
     float theta = random(0, 3141)/1000.;
-    int r = sin(theta)+abs(sin(theta));
-    int g = sin(theta+3.141/3)+abs(sin(theta+3.141/3));
-    int b = sin(theta+3.141*2/3)+abs(sin(theta+3.141*2/3));
-    led[newEvtCH-1][0] = 32*(r*r);
-    led[newEvtCH-1][1] = 32*(g*g);
-    led[newEvtCH-1][2] = 32*(b*b);
+    float r = sin(theta)+abs(sin(theta)); //0-2
+    float g = sin(theta+3.141/3)+abs(sin(theta+3.141/3));
+    float b = sin(theta+3.141*2/3)+abs(sin(theta+3.141*2/3));
+    led[newEvtCH-1][0] = (int)64*(r*r)-1;
+    led[newEvtCH-1][1] = (int)64*(g*g)-1;
+    led[newEvtCH-1][2] = (int)64*(b*b)-1;
 
     led[LED_group_size-2][0] = 32*(r*r);
     led[LED_group_size-2][1] = 32*(g*g);
@@ -116,8 +116,6 @@ void loop()
     led[LED_group_size-1][0] = 32*(r*r);
     led[LED_group_size-1][1] = 32*(g*g);
     led[LED_group_size-1][2] = 32*(b*b);
-    
-    
   }
   //reset newEvtCH
   newEvtCH=0;
@@ -133,16 +131,11 @@ void loop()
     led[i][1]/=LED_decay_factor;
     led[i][2]/=LED_decay_factor;
   }
-
   pixels.show();
   delay(100);
   noTone(Buzzer);
   delay(20);
-//prevent memory outage
-
-
 }
-
 void trigger()
 {
   newEvt=63-PINB;
